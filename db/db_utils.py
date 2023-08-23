@@ -1,13 +1,11 @@
 # MELHOR CRIAR UM CURSOR E UMA CONEXÃO EM CADA FUNÇÃO OU GERAL?
 import sqlite3
 
-def cria_tabela(query_dados):
+def cria_tabela(nome_tabela,query_dados):
     conn = sqlite3.connect('db/database_alunos.db')
     cursor = conn.cursor()
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS Livros ( ?
-    );
-    """), query_dados
+    comando_sql = f"CREATE TABLE IF NOT EXISTS {nome_tabela} ({query_dados})"
+    cursor.execute(comando_sql)
     conn.commit()
     conn.close()
 
@@ -15,8 +13,8 @@ def insere_dados(lista_dados):
     conn = sqlite3.connect('db/database_alunos.db')
     cursor = conn.cursor()
     cursor.executemany("""
-    INSERT INTO Livros (Titulo, Autor, AnoPublicacao, Genero)
-    VALUES (?, ?, ?, ?);
+    INSERT INTO Estudantes (Nome, Curso, Ano_ingresso)
+    VALUES (?, ?, ?);
     """, lista_dados)
     conn.commit()
     conn.close()
@@ -24,23 +22,36 @@ def insere_dados(lista_dados):
 def seleciona_tudo(tabela):
     conn = sqlite3.connect('db/database_alunos.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tabela")   
-    conn.commit()
+    sql = f"SELECT * FROM {tabela}"
+    cursor.execute(sql)
+    dados = cursor.fetchall()
     conn.close()
-    return cursor.fetchall()
+    return dados
 
-def filtro_tabela_geral(tabela, coluna, valor):
+def filtro_tabela_geral(tabela,query):
     conn = sqlite3.connect('db/database_alunos.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tabela WHERE coluna = valor")
+    sql = f"SELECT * FROM {tabela} WHERE {query}"
+    cursor.execute(sql)
+    filtro = cursor.fetchall()
     conn.commit()
     conn.close()
-    return cursor.fetchall()
+    return filtro
 
 # Atualiza dados de estudante específico
-def atualiza_dados(tabela, coluna, valor, coluna_mudar, valor_mudar):
+def atualiza_dados(tabela, query):
     conn = sqlite3.connect('db/database_alunos.db')
     cursor = conn.cursor()
-    cursor.execute("UPDATE tabela SET coluna_mudar = valor_mudar WHERE coluna = valor")
+    sql = f"UPDATE {tabela} SET {query}"
+    cursor.execute(sql)
+    conn.commit()
+    conn.close()
+
+# Deleta um registro da tabela
+def deleta_registro(tabela, query):
+    conn = sqlite3.connect('db/database_alunos.db')
+    cursor = conn.cursor()
+    sql = f"DELETE FROM {tabela} WHERE {query}"
+    cursor.execute(sql)
     conn.commit()
     conn.close()
