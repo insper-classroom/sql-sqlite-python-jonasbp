@@ -77,7 +77,7 @@ Iremos utilizar a plataforma https://sqliteonline.com/ para treinar comandos SQL
 
 
 
-### Exercício 2: Python - Sqlite
+### Exercício 2: Python - Sqlite OK
 
 Objetivo: Familiarizar-se com os comandos básicos de SQL e aprender a filtrar registros usando o comando WHERE.
 
@@ -111,7 +111,7 @@ Insira 5 registros de estudantes na tabela. Inclua os seguintes estudantes fict�
 
 
 
-### Exercicio 3: Python - SQLite
+### Exercicio 3: Python - SQLite OK
 
 **Exercício de Reaproveitamento e Organização de Código**
 
